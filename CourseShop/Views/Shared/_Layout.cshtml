@@ -1,0 +1,196 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CourseShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CourseShop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    
+    <style>
+          .autocomplete {
+            position: relative;
+                }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #cccccc;
+            border-top: none;
+            z-index: 1000;
+            left: 0;
+            right: 0;
+            top: 100%;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #FF6961;
+            border: 1px solid black;
+        }
+
+        .suggestion-item:hover {
+            background-color: #e9e9e9;
+        }
+
+        .image{
+                
+                height: 80px;
+                width: auto;
+
+        }
+        .a-menu{
+            cursor:pointer;
+        }
+        .a-menu:hover{
+        transform: scale(1.05); 
+        }
+
+    </style>
+
+</head>
+<body>
+<header class="bg-primary">
+    <div class="container-fluid">
+        <div class="row d-flex align-items-baseline">
+
+            <div class="col-5 d-flex flex-column">
+                <div class="autocomplete">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Wyszukaj kurs">
+                    <div id="autocomplete-list" class="autocomplete-items"></div>
+                </div>
+            </div>
+
+
+            <div class="col-2 d-flex align-items-center justify-content-center mt-2">
+                <a asp-controller="Home" asp-action="Index"> <img src="~/images/shopLogo.png" width="auto" height="120px"/></a>
+            </div>
+
+
+            <div class="col-12 col-lg-5 d-flex justify-content-evenly align-items-center">
+                
+                @if ((User.Identity?.IsAuthenticated ?? false))
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <a class="nav-link text-white fw-bold fs-5 d-flex align-items-center a-menu" asp-action="IndexAdmin" asp-controller="Course"><i class="bi bi-lock fs-4 me-1"></i>Admin</a>
+                    }
+                }
+                <a asp-action="Index" asp-controller="FavoriteCourses" class="nav-link text-white fw-bold fs-5 d-flex align-items-center a-menu"><i class="bi bi-heart fs-4 me-1"></i>Schowek</a>
+             
+                <a class="nav-link text-white fw-bold fs-5 d-flex align-items-center a-menu" asp-area="Identity" asp-page="/Account/Manage/Index"><i class="bi bi-person fs-4 me-1"></i>Konto</a>
+
+                <a class="nav-link text-white fw-bold fs-5 d-flex align-items-center a-menu"><i class="bi bi-cart3 fs-4 me-1"></i>Koszyk</a>
+
+                @if ((User.Identity?.IsAuthenticated ?? false))
+                {
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post" id="logoutForm">
+                        <a class="nav-link text-white fw-bold fs-5 d-flex align-items-center a-menu" id="logoutLink"><i class="bi bi-box-arrow-left fs-4 me-1"></i>Wyloguj</a>
+                    </form>
+                }
+                else
+                {
+                    <a class="nav-link text-white fw-bold fs-5 d-flex align-items-center a-menu" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-box-arrow-right fs-4 me-1"></i>Zaloguj</a>
+                }
+            </div>
+        </div>
+        
+        @await  Component.InvokeAsync("CategoriesMenuComponent")
+        
+    </div>
+
+</header>
+<div class="container-fluid">
+    <main role="main">
+        @RenderBody()
+    </main>
+</div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+<footer>
+    <div class="container-fluid">
+        <div class="row bg-primary" style="height:300px; width: -webkit-fill-available;"></div>
+    </div>
+</footer>
+</html>
+
+
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    var inputValue = this.value;
+    if (!inputValue) {
+        clearSuggestions();
+        return;
+    }
+    
+    fetch('/Course/GetCourseSuggestions?input=' + encodeURIComponent(inputValue))
+        .then(response => response.json())
+        .then(data => displaySuggestions(data))
+        .catch(error => console.error('Błąd:', error));
+});
+
+function displaySuggestions(suggestions) {
+    var container = document.getElementById("autocomplete-list");
+    clearSuggestions();
+
+    suggestions.forEach(suggestion => {
+        let item = document.createElement("div");
+        item.classList.add("suggestion-item");
+
+        // Dodaj obraz
+        let image = new Image();
+        image.classList.add("image");
+        image.src = suggestion.pictureString ? 'data:image;base64,' + suggestion.pictureString : 'placeholder-image-url';
+        item.appendChild(image);
+
+
+        // Dodaj nazwę kursu
+        let title = document.createElement("span");
+        title.textContent = suggestion.name;
+        item.appendChild(title);
+
+        // Dodaj cenę kursu
+        let price = document.createElement("span");
+        price.textContent = suggestion.price + " zł";
+        item.appendChild(price);
+
+        // Dodaj ukryte pole z ID kursu
+        let hiddenId = document.createElement("input");
+        hiddenId.type = "hidden";
+        hiddenId.value = suggestion.idCourse;
+        item.appendChild(hiddenId);
+
+        item.addEventListener("click", function() {
+            window.location.href = '/Course/Details/' + hiddenId.value;
+        });
+
+        container.appendChild(item);
+    });
+}
+
+function clearSuggestions() {
+    var container = document.getElementById("autocomplete-list");
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+}
+document.getElementById('logoutLink').addEventListener('click', function(e) {
+    e.preventDefault(); // Zapobiega standardowej nawigacji linku
+    document.getElementById('logoutForm').submit(); // Wysyła formularz
+});
+
+</script>

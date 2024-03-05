@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CourseShop.Application.HighlightedCategory.Queries.GetAllHighlightedCategoriesWithCourses.GetAllHighlightedCategoriesWithCoursesQuery>
+<style>
+    .scrollable-row {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    /* This styles the scrollbar track */
+.scrollable-row::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+    border-radius: 10px;
+}
+
+/* This styles the scrollbar thumb (the part that you drag) */
+.scrollable-row::-webkit-scrollbar-thumb {
+    background-color: #FFBE7B;
+    border-radius: 10px;
+    border: 3px solid #f4f4f4;
+}
+
+/* This styles the scrollbar itself */
+.scrollable-row::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+
+
+
+
+
+</style>
+
+@foreach (var item in Model)
+{
+    <span class="fs-3">Wyróżniona kategoria: 
+    <a class="text-decoration-none fs-3 text-black" style="cursor: pointer;" href="@Url.Action("SubCatDetails", "Category", new {id = item.IdCategory})">@item.CategoryName</a>
+    </span>
+    <div class="row scrollable-row mb-3 p-2">
+    @foreach (var course in item.Courses)
+    {
+        <div class="d-flex justify-content-center" style="width:400px;">
+            <div class="card w-100 card-course" style="cursor: pointer;" data-course-id="@course.IdCourse" data-course-url="@Url.Action("Details", "Course", new { id = course.IdCourse })">
+                <i class="bi bi-heart-fill pt-1 pe-1 fs-3" style="z-index:2; position:absolute; right:0;"></i>
+                <img src="data:image;base64,@System.Convert.ToBase64String(course.CoursePicture)" class="card-img-top" alt="CoursePicture" style="height: 200px; object-fit: cover;">
+                <div class="card-body-course card-body pb-5">
+                    <h5 class="card-title">@course.CourseName</h5>
+                    <p class="card-text-course card-text">@course.CourseDescription</p>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+}
+
+<script>
+document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', function() {
+        var courseUrl = this.getAttribute('data-course-url');
+        window.location.href = courseUrl;
+    });
+});
+
+</script>

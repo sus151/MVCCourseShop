@@ -1,0 +1,39 @@
+﻿@model CourseShop.Application.Category.Commands.CreateMainCategory.CreateMainCategoryCommand
+
+@{
+    ViewData["Title"] = "CreateMainCategory";
+    Layout = "_AdminLayout";
+}
+
+
+<h1 class="text-center mt-3">Tworzenie głównej kategorii</h1>
+
+
+
+<div class="form-container bg-secondary mb-5">
+    <form asp-action="CreateMainCategory" asp-controller="Category" method="post">
+
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Stwórz" class="a-edit" style="height:40px;">
+            <a class="a-edit d-flex align-items-center justify-content-center" asp-action="IndexAdmin" asp-Controller="Course">Lista kategorii</a>
+        </div>
+    </form>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

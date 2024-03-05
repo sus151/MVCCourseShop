@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CourseShop.Application.HighlitedCategory.Queries.GetAllHighlitedCategories.GetAllHighlightedCategoriesQuery>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+
+<style> 
+    .high-table th, .high-table td{
+        width: 50%;
+    }
+</style>
+
+<h1 class="text-center mt-3">Wyróznione kategorie</h1>
+
+<div class="row mb-2">
+    <a class="ms-2 a-btn" asp-action="Create">Dodaj nową wyróżnioną kategorię</a>
+</div>
+
+
+<table class="admin-table high-table">
+    <thead>
+    <tr>
+        <th>
+            Nazwa wyróżnionej kategorii
+        </th>
+        <th>
+            Akcje
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    
+ 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.HighlightedCategoryName
+            </td>
+           
+            <td>
+                <div class="d-flex gap-3">
+                    <a class="a-details" asp-action="Details" asp-route-id="@item.IdHighlightedCategory">Szczegóły</a>
+                    <a class="a-delete" asp-action="Delete" asp-route-id="@item.IdHighlightedCategory">Usuń</a>
+                </div>
+            </td>
+        </tr>
+    }
+  
+    </tbody>
+</table>

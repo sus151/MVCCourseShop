@@ -1,0 +1,178 @@
+﻿@model CourseShop.Application.News.Commands.CreateNews.CreateNewsCommand
+@using Newtonsoft.Json
+
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_AdminLayout";
+}
+
+
+<style>
+    .ui-autocomplete {
+    background-color: white; 
+    max-height: 100px; 
+    overflow-y: auto; 
+    border: 1px solid #aaa;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer; 
+    width:100%;
+}
+.ui-helper-hidden-accessible { display: none; }
+
+
+.ui-autocomplete .ui-menu-item-wrapper {
+    padding: 2px 10px;
+    font-size: 14px; 
+}
+</style>
+
+
+<h1 class="text-center mt-3">Tworzenie newsa</h1>
+
+<div class="form-container bg-secondary mb-5">
+    <form asp-action="Create" asp-controller="News" method="post" enctype="multipart/form-data">
+    
+    
+        <div class="form-group">
+            <label>Zdjęcie na większą rozdzielczość</label>
+            <input type="file" asp-for="PhotoFile" class="form-control" />
+            <span asp-validation-for="PhotoFile" class="text-danger"></span>
+        </div>
+            
+        <div class="form-group">
+            <label>Zdjęcie na mniejszą rozdzielczość</label>
+            <input type="file" asp-for="PhotoSmallFile" class="form-control" />
+            <span asp-validation-for="PhotoSmallFile" class="text-danger"></span>
+        </div>
+            
+
+        <div class="form-group">
+            <label>Kurs</label>
+            <input type="text" id="courseName" asp-for="CourseName" class="form-control" placeholder="Wybierz kurs">
+            <span asp-validation-for="IdCourse" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="IdCourse" id="idCourse" />
+            
+        <div class="form-group">
+            <label>Podkategoria</label>
+            <input type="text" id="categoryName" asp-for="CategoryName" class="form-control" placeholder="Wybierz kategorie">
+            <span asp-validation-for="IdCategory" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="IdCategory" id="idCategory" />
+            
+        <div class="form-group">
+            <label>Główna kategoria</label>
+            <input type="text" id="mainCategoryName" asp-for="MainCategoryName" class="form-control" placeholder="Wybierz główną kategorie">
+            <span asp-validation-for="IdMainCategory" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="IdMainCategory" id="idMainCategory" />
+    
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Stwórz" class="a-edit" style="height:40px;">
+            <a class="a-edit d-flex align-items-center justify-content-center" asp-action="IndexAdmin" asp-Controller="News">Lista newsów</a>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+<script>
+    $(function() {
+        var courses = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Courses));
+        var subCategories = @Html.Raw(JsonConvert.SerializeObject(ViewBag.SubCategories));
+        var mainCategories = @Html.Raw(JsonConvert.SerializeObject(ViewBag.MainCategories));
+
+        function isValidChoice(input, list) {
+            if (input.val().trim() === '') {
+                return true; 
+            }
+            return list.some(item => item.Name === input.val());
+        }
+
+        $("#courseName").autocomplete({
+            source: courses.map(c => { return { label: c.Name, value: c.IdCourse }; }),
+            open: function() {
+                $(this).autocomplete("widget").css({
+                    "width": ($(this).outerWidth() + "px")
+                });
+            },
+            select: function(event, ui) {
+                $('#idCourse').val(ui.item.value);
+                $(this).val(ui.item.label);
+                return false; 
+            }
+        });
+
+        $("#categoryName").autocomplete({
+            source: subCategories.map(c => { return { label: c.Name, value: c.IdCategory }; }),
+            open: function() {
+                $(this).autocomplete("widget").css({
+                    "width": ($(this).outerWidth() + "px")
+                });
+            },
+            select: function(event, ui) {
+                $('#idCategory').val(ui.item.value);
+                $(this).val(ui.item.label);
+                return false; 
+            }
+        });
+
+        $("#mainCategoryName").autocomplete({
+            source: mainCategories.map(c => { return { label: c.Name, value: c.IdCategory }; }),
+            open: function() {
+                $(this).autocomplete("widget").css({
+                    "width": ($(this).outerWidth() + "px")
+                });
+            },
+            select: function(event, ui) {
+                $('#idMainCategory').val(ui.item.value);
+                $(this).val(ui.item.label);
+                return false; 
+            }
+        });
+
+         $("#courseName, #categoryName, #mainCategoryName").change(function() {
+            var list;
+            switch(this.id) {
+                case "courseName":
+                    list = courses;
+                    if (!isValidChoice($(this), list)) {
+                        $(this).val('');
+                        $('#idCourse').val(''); // Zerowanie ID kursu
+                    }
+                    break;
+                case "categoryName":
+                    list = subCategories;
+                    if (!isValidChoice($(this), list)) {
+                        $(this).val('');
+                        $('#idCategory').val(''); // Zerowanie ID kategorii
+                    }
+                    break;
+                case "mainCategoryName":
+                    list = mainCategories;
+                    if (!isValidChoice($(this), list)) {
+                        $(this).val('');
+                        $('#idMainCategory').val(''); // Zerowanie ID głównej kategorii
+                    }
+                    break;
+            }
+        });
+         function clearIdIfEmpty(input, idField) {
+        if (input.val().trim() === '') {
+            idField.val('');
+        }
+    }
+        $("#newsCreate").submit(function() {
+        clearIdIfEmpty($("#courseName"), $('#idCourse'));
+        clearIdIfEmpty($("#categoryName"), $('#idCategory'));
+        clearIdIfEmpty($("#mainCategoryName"), $('#idMainCategory'));
+    });
+
+    });
+</script>
+
+
+

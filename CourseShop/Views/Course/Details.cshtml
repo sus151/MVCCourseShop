@@ -1,0 +1,145 @@
+﻿@model CourseShop.Application.DTOs.GetCourseDto
+
+@{
+    ViewData["Title"] = "Details";
+    var courseId = Model.IdCourse;
+}
+<div class="row">
+    
+    <div class="col p-0">
+        <img src="data:image;base64,@System.Convert.ToBase64String(Model.CoursePicture)" width="100%" height="auto"/>
+    </div>
+    
+
+    <div class="col d-flex flex-column">
+    <a class="mt-3 text-black p-1 bg-btn rounded-3" style="text-decoration:none; border: 1px solid black; width: fit-content; " asp-action="SubCatDetails" asp-controller="Category" asp-route-id="@Model.IdCategory"><i class="bi bi-arrow-left"></i> @Model.Category</a>
+    <span class="fw-bold fs-2 mt-3">@Model.Name</span>
+    <span>Ocena produktu</span>
+    <span class="fs-1 fw-bold mt-3">89.99</span>
+        <div class="d-flex mt-2" style="gap:10px;">
+            <button class="favorite-button" style="width:40%; height:auto;">Dodaj do koszyka</button>
+            <div class="favorite-button" style="background-color:white;">
+                @if (Model.IsFavorite == true)
+                {
+                    <img class="heart" src="~/icons/redHeart.png"/>
+                }
+                else
+                {
+                    <img class="heart" src="~/icons/greyHeart.png"/>
+                }
+
+            </div>
+        </div>
+
+       
+            
+            
+    <div class="card mt-3" style="z-index:1;">
+        <div class="card-header d-flex justify-content-between" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#description" style="cursor: pointer;">
+            Opis kursu <i id="chevron" class="bi bi-chevron-up"></i>
+        </div>
+        <div id="description" class="collapse show">
+            <div class="card-body">
+                @Model.Description
+            </div>
+        </div>
+    </div>
+        
+    <div class="mt-4 text-center" ><span class="fs-5 fw-bold">Zawartość kursu:</span></div>
+
+            
+    @foreach (var step in Model.CourseSteps)
+    {
+        var targetId = $"stepCollapse{step.IdCourseStep}";
+        <div class="card">
+            <div class="card-header d-flex justify-content-between" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#@targetId" style="cursor: pointer;">
+                @step.Name <i class="bi bi-chevron-down step-chevron"></i>
+            </div>
+            <div id="@targetId" class="collapse">
+                <div class="card-body">
+                    @step.Description
+                </div>
+            </div>
+        </div>
+    }
+
+            
+            
+
+        
+</div>
+</div>
+
+
+<script>
+
+   $(document).ready(function() {
+    // Attach the click event handler directly to the image elements with class .heart-details
+    $('.heart').click(function(event) {
+        // The 'this' context is the img element that was clicked
+        var imgElement = $(this);
+        addOrRemoveFavorite(imgElement, '@courseId'); // Ensure courseId is properly quoted if it's a string
+    });
+});
+
+function addOrRemoveFavorite(element, courseId) {
+    $.ajax({
+        url: '/Course/AddToFavorites',
+        type: 'POST',
+        data: { idCourse: courseId },
+        success: function(response) {
+            if(response.success) {
+                console.log(response.action);
+                // Directly update the src attribute without a query string for cache busting
+                if(response.action == "Added"){
+                    element.attr('src', '/icons/redHeart.png');
+                } else if(response.action == "Deleted"){
+                    element.attr('src', '/icons/greyHeart.png');
+                }
+            }
+        },
+        error: function(err) {
+            if (err.status === 401) {
+                window.location.href = '/Identity/Account/Login';
+            } else {
+                alert("Wystąpił błąd: " + err.responseText);
+            }
+        }
+    });
+}
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.step-chevron').forEach(function(chevronIcon) {
+        var header = chevronIcon.closest('.card-header');
+        var collapseElementId = header.getAttribute('data-bs-target');
+        var collapseElement = document.querySelector(collapseElementId);
+
+        collapseElement.addEventListener('show.bs.collapse', function () {
+            chevronIcon.classList.remove('bi-chevron-down');
+            chevronIcon.classList.add('bi-chevron-up');
+        });
+
+        collapseElement.addEventListener('hide.bs.collapse', function () {
+            chevronIcon.classList.remove('bi-chevron-up');
+            chevronIcon.classList.add('bi-chevron-down');
+        });
+    });
+});
+
+document.getElementById('description').addEventListener('show.bs.collapse', function () {
+        document.getElementById('chevron').classList.remove('bi-chevron-down');
+        document.getElementById('chevron').classList.add('bi-chevron-up');
+    });
+
+    document.getElementById('description').addEventListener('hide.bs.collapse', function () {
+        document.getElementById('chevron').classList.remove('bi-chevron-up');
+        document.getElementById('chevron').classList.add('bi-chevron-down');
+    });
+
+
+
+</script>
+
+

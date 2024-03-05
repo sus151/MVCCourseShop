@@ -1,0 +1,12 @@
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\bin\Debug\net7.0\CourseShop.Domain.deps.json
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\bin\Debug\net7.0\CourseShop.Domain.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\bin\Debug\net7.0\CourseShop.Domain.pdb
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\CourseShop.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\CourseShop.Domain.AssemblyInfoInputs.cache
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\CourseShop.Domain.AssemblyInfo.cs
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\CourseShop.Domain.csproj.CoreCompileInputs.cache
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\CourseShop.Domain.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\refint\CourseShop.Domain.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\CourseShop.Domain.pdb
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\ref\CourseShop.Domain.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Domain\obj\Debug\net7.0\CourseShop.Domain.csproj.AssemblyReference.cache

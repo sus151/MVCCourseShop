@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CourseShop.Application.DTOs.GetCategoryDto>
+
+@{
+    Layout = "_AdminLayout";
+}
+<style>
+    .category-table th, .category-table td {
+    width: 50%; /* przykładowo, jeśli są dwie kolumny */
+}
+</style>
+
+<h1 class="text-center mt-3">Kategorie</h1>
+<a class="ms-2 a-btn" asp-action="CreateMainCategory">Dodaj nową główną kategorię</a>
+<a class="ms-2 a-btn" asp-action="CreateSubCategory">Dodaj nową podkategorię</a>
+@foreach (var category in Model)
+{
+    <div class="d-flex gap-2 mt-5">
+    <h2>@category.Name</h2>
+    <form asp-action="Delete" method="post" asp-controller="Category" asp-route-id="@category.IdCategory">
+        <input type="submit" value="Usuń" class="a-delete" style="height:40px;" onclick="return confirmDelete();"/>
+    </form>
+    </div>
+
+    <table class="admin-table category-table">
+        <thead>
+        <tr>
+
+            <th>
+                Kategoria
+            </th>
+
+            <th>
+                Akcje
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var subCategory in category.SubCategories)
+        {
+            <tr>
+                <td>
+                    @subCategory.Name
+                </td>
+                <td>
+                    <form asp-action="Delete" method="post" asp-controller="Category" asp-route-id="@subCategory.IdCategory">
+                        <input type="submit" value="Usuń" class="a-delete" style="height:40px;" onclick="return confirmDelete();"/>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<script>
+function confirmDelete() {
+    return confirm("Czy na pewno chcesz usunąć tę kategorię?");
+}
+</script>

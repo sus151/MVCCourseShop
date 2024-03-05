@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CourseShop.Application.News.Queries.GetAllNews.GetAllNewsQuery>
+
+
+<style>
+    #carouselExampleAutoplaying .carousel-inner {
+        width: 100%;
+        height: 500px; /* Stała wysokość */
+    }
+    
+    #carouselExampleAutoplaying .carousel-item {
+        height: 100%;
+    }
+    
+    #carouselExampleAutoplaying .carousel-item img {
+        width: 100%;
+        height: 100%; 
+        object-fit: cover; 
+        object-position: center; 
+    }
+</style>
+
+
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @{
+            int itemIndex = 0;
+            foreach (var newsItem in Model)
+            {
+                var activeClass = itemIndex == 0 ? "active" : "";
+                var url = "";
+                if (newsItem.IdCategory!=null)
+                {
+                    url =  Url.Action("SubCatDetails", "Category", new { id = newsItem.IdCategory });
+                }
+                if (newsItem.IdMainCategory!=null)
+                {
+                    url =  Url.Action("MainCatDetails", "Category", new { id = newsItem.IdMainCategory });
+                }
+                if (newsItem.IdCourse!=null)
+                {
+                    url =  Url.Action("Details", "Course", new { id = newsItem.IdCourse });
+                }
+                <div class="carousel-item @activeClass">
+                    <a href="@url">
+                    <img class="d-none d-lg-block" src="data:image;base64,@System.Convert.ToBase64String(newsItem.Photo)"/>
+                    <img class="d-block d-lg-none" src="data:image;base64,@System.Convert.ToBase64String(newsItem.PhotoSmall)"/>
+                    </a> 
+                </div>
+
+                itemIndex++;
+            }
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+

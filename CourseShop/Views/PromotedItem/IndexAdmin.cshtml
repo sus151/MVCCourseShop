@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CourseShop.Application.PromotedItem.Queries.GetAllPromotedItems.GetAllPromotedItemsQuery>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+<style>
+    .promo-table th, .promo-table td{
+        width : 25%;
+    }
+</style>
+
+<h1 class="text-center mt-3">Promowane sekcje</h1>
+
+<div class="row mb-2">
+    <a class="ms-2 a-btn" asp-action="Create">Dodaj nową promowaną sekcje</a>
+</div>
+
+<table class="admin-table promo-table">
+    <thead>
+    <tr>
+        <th>
+            Główna kategoria
+        </th>
+        <th>
+            Podkategoria
+        </th>
+        <th>
+            Kurs
+        </th>
+        <th>
+            Akcje
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    
+ 
+    @foreach (var item in Model)
+    {
+        var course = item.CourseName == null ? "-" : item.CourseName;
+        var main = item.MainCategoryName == null ? "-" : item.MainCategoryName;
+        var sub = item.CategoryName == null ? "-" : item.CategoryName;
+        <tr>
+            <td>
+                @main
+            </td>
+            <td>
+                @sub
+            </td>
+            <td>
+                @course
+            </td>
+            <td>
+                <div class="d-flex gap-3">
+                    <a class="a-details" asp-action="Details" asp-route-id="@item.IdPromotedItem">Szczegóły</a>
+                    <a class="a-delete" asp-action="Delete" asp-route-id="@item.IdPromotedItem">Usuń</a>
+                </div>
+            </td>
+        </tr>
+    }
+  
+    </tbody>
+</table>

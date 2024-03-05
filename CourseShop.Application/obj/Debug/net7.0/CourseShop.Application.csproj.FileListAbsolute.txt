@@ -1,0 +1,15 @@
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\bin\Debug\net7.0\CourseShop.Application.deps.json
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\bin\Debug\net7.0\CourseShop.Application.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\bin\Debug\net7.0\CourseShop.Application.pdb
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\bin\Debug\net7.0\CourseShop.Domain.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\bin\Debug\net7.0\CourseShop.Domain.pdb
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.csproj.AssemblyReference.cache
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.AssemblyInfoInputs.cache
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.AssemblyInfo.cs
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.csproj.CoreCompileInputs.cache
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.csproj.CopyComplete
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\refint\CourseShop.Application.dll
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\CourseShop.Application.pdb
+C:\Users\jakub\OneDrive\Pulpit\Praktyki\SklepInternetowy\SklepMVC\CourseShop.Application\obj\Debug\net7.0\ref\CourseShop.Application.dll

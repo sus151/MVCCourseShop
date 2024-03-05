@@ -1,0 +1,53 @@
+﻿@model CourseShop.Application.Category.Commands.CreateSubCategory.CreateSubCategoryCommand
+
+@{
+    ViewData["Title"] = "CreateSubCategory";
+    Layout = "_AdminLayout";
+}
+
+<h1 class="text-center mt-3">Tworzenie podkategorii</h1>
+
+
+<div class="form-container bg-secondary mb-5">
+    <form asp-action="CreateSubCategory" asp-controller="Category" method="post">
+        
+        <div class="form-group">
+            <label>Główna kategoria</label>
+            <select class="form-control" asp-for="IdMainCategory">
+                <option value="">Wybierz główną kategorię</option>
+                @foreach (var category in ViewBag.MainCategories)
+                {
+                    <option value="@category.IdCategory">@category.Name</option>
+                }
+            </select>
+            <span asp-validation-for="IdMainCategory" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Nazwa podkategorii</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Opis podkategorii</label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Stwórz" class="a-edit" style="height:40px;">
+            <a class="a-edit d-flex align-items-center justify-content-center" asp-action="IndexAdmin" asp-Controller="Course">Lista kategorii</a>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

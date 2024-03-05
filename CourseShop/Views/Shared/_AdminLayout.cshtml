@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CourseShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CourseShop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+</head>
+<body>
+<header class="bg-primary">
+    <div class="d-flex gap-5 ps-3 py-3 justify-content-evenly">
+        <a class="text-decoration-none text-white fs-5 fw-bold" asp-action="Index" asp-controller="Home">Strona główna</a>
+
+        <a class="text-decoration-none text-white fs-5 fw-bold" asp-action="IndexAdmin" asp-controller="Course">Kursy</a>
+
+        <a class="text-decoration-none text-white fs-5 fw-bold" asp-action="IndexAdmin" asp-controller="Category">Kategorie</a>
+
+        <a class="text-decoration-none text-white fs-5 fw-bold" asp-action="IndexAdmin" asp-controller="News">Newsy</a>
+
+        <a class="text-decoration-none text-white fs-5 fw-bold" asp-action="IndexAdmin" asp-controller="HighlightedCategory">Wyróżnione kategorie</a>
+
+        <a class="text-decoration-none text-white fs-5 fw-bold" asp-action="IndexAdmin" asp-controller="PromotedItem">Promowane sekcje</a>
+    </div>
+
+</header>
+    <div class="container-fluid">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

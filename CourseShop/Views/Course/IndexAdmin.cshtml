@@ -1,0 +1,99 @@
+﻿@model IEnumerable<CourseShop.Application.DTOs.GetCourseDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+
+
+
+<h1 class="text-center mt-3">Kursy</h1>
+
+
+<div class="row mt-2 mb-2">
+    <div class="col d-flex justify-content-between">
+        <a class="ms-2 a-btn" asp-action="Create">Dodaj nowy kurs</a>
+     <input style="width:200px;" type="text" id="searchCourse" placeholder="Szukaj kursu po nazwie..." onkeyup="searchCourse()"></div>
+
+</div>
+
+<table class="admin-table course-table">
+    <thead>
+        <tr>
+            <th>
+                Nazwa
+            </th>
+            <th>
+                Opis
+            </th>
+            <th>Cena</th>
+            <th>
+                Zdjęcie 
+            </th>
+            <th>
+                Kategoria
+            </th>
+            <th>
+                Poziom trudności
+            </th>
+            <th>
+                Akcje
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var course in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => course.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => course.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => course.Price)
+            </td>
+            <td><img src="data:image;base64,@System.Convert.ToBase64String(course.CoursePicture)" width="80" height="80"/></td>
+            <td>
+                @course.MainCategoryName/@course.Category
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => course.DifficultyLevel)
+            </td>
+            <td>
+                <div class="d-flex gap-3">
+                <a class="a-details" asp-action="DetailsAdmin" asp-route-id="@course.IdCourse">Szczegóły</a>
+                <a class="a-edit" asp-action="Edit" asp-route-id="@course.IdCourse">Edytuj</a>
+                <a class="a-delete" asp-action="Delete" asp-route-id="@course.IdCourse">Usuń</a>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+<script>
+    function searchCourse() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchCourse");
+        filter = input.value.toUpperCase();
+        table = document.getElementsByClassName("admin-table course-table")[0];
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+    }
+
+
+</script>
+

@@ -1,0 +1,212 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.bg-primary {
+    background: linear-gradient(to bottom, #243B55, #141E30) !important;
+}
+
+
+.bg-secondary {
+    background-color: #243B55 !important;
+}
+
+.bg-btn {
+    background-color: #FF6961;
+}
+
+.active {
+    background-color: #FF6961 !important;
+}
+
+.card-course {
+    transition: transform 0.3s ease;
+}
+
+.card-course:hover {
+    transform: scale(1.03);
+}
+
+.heart:hover {
+    transform: scale(1.05);
+}
+
+.a-btn {
+    background-color: #FF6961;
+    border-radius: 5px;
+    width: auto;
+    border: 1px solid black;
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px 5px 10px;
+}
+
+    .a-btn:hover {
+        background-color: red;
+        color: black;
+    }
+
+.a-edit {
+    background-color: deepskyblue;
+    border-radius: 5px;
+    width: auto;
+    border: 1px solid black;
+    text-decoration: none;
+    color: black;
+    padding: 1px 5px 1px 5px;
+}
+
+
+    .a-edit:hover {
+        background-color: dodgerblue;
+        color: black;
+    }
+
+.a-details {
+    background-color: orange;
+    border-radius: 5px;
+    width: auto;
+    border: 1px solid black;
+    text-decoration: none;
+    color: black;
+    padding: 1px 5px 1px 5px;
+}
+
+    .a-details:hover {
+        background-color: darkorange;
+        color: black;
+    }
+
+.a-delete {
+    background-color: red;
+    border-radius: 5px;
+    width: auto;
+    border: 1px solid black;
+    text-decoration: none;
+    color: black;
+    padding: 1px 5px 1px 5px;
+}
+
+.a-delete:hover {
+    background-color: indianred;
+    color: black;
+}
+
+
+.form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    width: 100%;
+}
+
+    .form-control:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+    .admin-table thead tr {
+        background-color: black;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 12px 15px;
+    }
+
+    .admin-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+        .admin-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .admin-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+.dis-inp-bac:disabled {
+    background-color: white;
+}
+
+.card-body-course {
+    text-align: center;
+    height: 150px;
+    overflow: hidden;
+}
+
+.card-text-course {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    text-overflow: ellipsis;
+}
+
+.favorite-button {
+    border: 1px solid lightslategrey;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #FF6961;
+}
+
+.favorite-button:hover {
+
+    background-color: red;
+}
+
+.heart{
+    cursor: pointer;
+}
+
+label{
+    color:white;
+}
+

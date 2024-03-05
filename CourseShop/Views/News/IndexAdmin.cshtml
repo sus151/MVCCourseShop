@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CourseShop.Application.News.Queries.GetAllNews.GetAllNewsQuery>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+<style>
+    .news-table th, .news-table td{
+        width: 25%;
+    }
+</style>
+
+<h1 class="text-center mt-3">Newsy</h1>
+
+<div class="row mb-2">
+<a class="ms-2 a-btn" asp-action="Create">Dodaj nowego newsa</a>
+</div>
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>
+                Kurs
+            </th>
+            <th>
+                Główna kategoria
+            </th>
+            <th>
+                Podkategoria
+            </th>
+            <th>
+                Akcje
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    
+ 
+    @foreach (var item in Model)
+    {
+        var course = item.CourseName == null ? "-" : item.CourseName;
+        var main = item.MainCategoryName == null ? "-" : item.MainCategoryName;
+        var sub = item.CategoryName == null ? "-" : item.CategoryName;
+        <tr>
+            <td>
+                @course
+            </td>
+            <td>
+                @main
+            </td>
+                <td>
+                    @sub
+                </td>
+            <td>
+                <div class="d-flex gap-3">
+                <a class="a-details" asp-action="Details" asp-route-id="@item.IdNews">Szczegóły</a>
+                <a class="a-delete" asp-action="Delete" asp-route-id="@item.IdNews">Usuń</a>
+                </div>
+            </td>
+        </tr>
+    }
+  
+    </tbody>
+</table>

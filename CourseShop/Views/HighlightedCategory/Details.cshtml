@@ -1,0 +1,26 @@
+﻿@model CourseShop.Application.HighlightedCategory.Queries.GetHighlightedCategoryById.GetHighlightedCategoryByIdQuery
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_AdminLayout";
+}
+
+<h1 class="text-center mt-3">Szczegóły Wyróżnionej kategorii</h1>
+
+
+
+<div class="form-container mb-5 bg-secondary">
+    
+    <div class="form-group">
+        <label>Kategoria</label>
+        <input disabled value="@Model.CategoryName" class="form-control dis-inp-bac"/>
+    </div>
+    
+    <div class="d-flex justify-content-between">
+        <a class="a-edit d-flex align-items-center justify-content-center" asp-action="IndexAdmin" asp-Controller="HighlightedCategory">Lista wyróżnionych kategorii</a>
+        <form asp-action="Delete" method="post" asp-controller="HighlightedCategory">
+            @Html.HiddenFor(model => model.IdHighlightedCategory)
+            <input type="submit" value="Usuń" class="a-delete" style="height:40px;"/>
+        </form>
+    </div>
+</div>

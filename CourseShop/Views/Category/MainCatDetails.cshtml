@@ -1,0 +1,113 @@
+﻿@model CourseShop.Application.DTOs.GetCategoryDto
+
+@{
+    ViewBag.Title = "Category Details";
+}
+
+<div class="container-fluid">
+    
+    
+    <div class="row mt-2 mb-3">
+        <h1>@Model.Name</h1>
+    </div>
+    <div class="row mb-3">
+        <span>@Model.Description</span>
+    </div>
+    
+    <div class="row"><span class="fs-4 mb-2">Podkategorie:</span></div>
+    <div class="row gap-1 mb-4">
+        @foreach (var subcategory in @Model.SubCategories)
+        {
+            <div class="col-2">
+                <a class="btn bg-btn w-100" asp-action="SubCatDetails" asp-controller="Category" asp-route-id="@subcategory.IdCategory">@subcategory.Name</a>
+            </div>
+        }
+    </div>
+    
+    <div class="row d-flex align-items-center">
+        <div class="col-2">
+            <span>Liczba kursów: <strong>@Model.SubCategories.SelectMany(subCat => subCat.Courses).Count()</strong></span>
+        </div>
+        <div class="col-8"><hr/></div>
+        <div class="col-2 d-flex">
+            <span class="me-2">Sortuj</span>
+            <select style="width: -webkit-fill-available;">
+                <option value="">Sortuj po:</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="row mt-3">
+        @foreach (var category in Model.SubCategories)
+        {
+            @foreach (var course in category.Courses)
+            {
+                <div class="col-3 d-flex justify-content-center mb-4">
+                    <div class="card w-100 card-course" style="cursor: pointer;" data-course-id="@course.IdCourse" data-course-url="@Url.Action("Details", "Course", new { id = course.IdCourse })">
+                        @if (ViewBag.Fav!=null && ViewBag.Fav.Contains(course.IdCourse))
+                        {
+                            <img class="heart m-1" src="~/icons/redHeart.png" style="z-index:2; position:absolute; right:0;" width="50px" height="50px"/>
+                        }
+                        else
+                        {
+                            <img class="heart m-1" src="~/icons/greyHeart.png" style="z-index:2; position:absolute; right:0;" width="50px" height="50px"/>
+                        }
+                        <img src="data:image;base64,@System.Convert.ToBase64String(course.CoursePicture)" class="card-img-top" alt="CoursePicture" style="height: 200px; object-fit: cover;">
+                        <div class="card-body-course card-body">
+                            <h5 class="card-title">@course.Name</h5>
+                            <p class="card-text-course card-text">@course.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+
+
+
+</div>
+
+<script>
+    $(document).ready(function() {
+    $('.heart').click(function(event) {
+        event.stopPropagation();
+
+        var self = $(this);
+        var courseId = self.closest('.card-course').data('course-id');
+
+        $.ajax({
+            url: '/Course/AddToFavorites',
+            type: 'POST',
+            data: { idCourse: courseId },
+            success: function(response) {
+                if(response.success) {
+                    console.log(response.action);
+                    if(response.action == "Added"){
+                    self.attr('src', '/icons/redHeart.png');
+                    }
+                    if(response.action == "Deleted"){
+                    self.attr('src', '/icons/greyHeart.png');
+                    }
+                }
+            },
+            error: function(err) {
+                if (err.status === 401) {
+            window.location.href = '/Identity/Account/Login';
+        } else {
+            alert("Wystąpił błąd: " + err.responseText);
+        }
+            }
+        });
+    });
+
+
+    $('.card-course').click(function() {
+        var courseUrl = $(this).data('course-url');
+        window.location.href = courseUrl;
+    });
+});
+
+</script>

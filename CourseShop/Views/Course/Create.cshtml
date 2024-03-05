@@ -1,0 +1,119 @@
+﻿@using System.Collections.Specialized
+@model CourseShop.Application.Course.Commands.CreateCourse.CreateCourseCommand
+
+@{
+    Layout = "_AdminLayout";
+}
+
+
+<h1 class="text-center mt-3">Tworzenie kursu</h1>
+
+<div class="form-container bg-secondary mb-5">
+    <form asp-action="Create" asp-controller="Course" method="post" enctype="multipart/form-data">
+        
+        <div class="form-group">
+            <label asp-for="Name">Name</label>
+            <input class="form-control" type="text" asp-for="Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description">Description</label>
+            <input class="form-control" type="text" asp-for="Description">
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price">Price</label>
+            <input class="form-control" type="number" asp-for="Price">
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Main Category</label>
+            <select class="form-control" id="mainCategory">
+                <option value="">Wybierz kategorię</option>
+                @foreach (var category in ViewBag.CategorySelect)
+                {
+                    <option value="@category.IdCategory">@category.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="IdCategory">Category</label>
+            <select class="form-control" asp-for="IdCategory" id="subCategory" disabled>
+                <option value="">Wybierz podkategorię</option>
+            </select>
+            <span asp-validation-for="IdCategory" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="IdDifficultyLevel">DifficultyLevel</label>
+            <select class="form-control" asp-for="IdDifficultyLevel">
+                <option value="">Wybierz poziom</option>
+                @foreach (var difficultyLevel in ViewBag.DifficultyLevelsSelect)
+                {
+                    <option value="@difficultyLevel.IdDifficultyLevel">@difficultyLevel.Difficulty</option>
+                }
+            </select>
+            <span asp-validation-for="IdDifficultyLevel" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="File">Course Picture</label>
+            <input type="file" asp-for="File" class="form-control"/>
+            <span asp-validation-for="File" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Stwórz" class="a-edit" style="height:40px;">
+            <a class="a-edit d-flex align-items-center justify-content-center" asp-action="IndexAdmin" asp-Controller="Course">Lista kursów</a>
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+       document.addEventListener("DOMContentLoaded", function() {
+    var mainCategorySelect = document.getElementById('mainCategory');
+    var subCategorySelect = document.getElementById('subCategory');
+
+    mainCategorySelect.addEventListener('change', function() {
+        var categoryId = this.value;
+        if (categoryId) {
+            // Włącz select podkategorii
+            subCategorySelect.removeAttribute('disabled');
+
+            // Wysyłanie żądania AJAX do serwera
+            fetch('@Url.Action("GetSubcategoriesByMainCategoryId", "Category")?id=' + categoryId)
+                .then(response => response.json())
+                .then(subcategories => {
+                    // Usuwanie starych opcji
+                    subCategorySelect.innerHTML = '';
+
+                    // Dodawanie nowych opcji
+                    subcategories.forEach(function(subcategory) {
+                        var option = document.createElement('option');
+                        option.value = subcategory.idCategory;
+                        option.textContent = subcategory.name;
+                        subCategorySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            // Wyłącz select podkategorii i usuń opcje
+            subCategorySelect.setAttribute('disabled', 'disabled');
+            subCategorySelect.innerHTML = '<option value="">Wybierz podkategorię</option>';
+        }
+    });
+});
+    </script>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,94 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@* @@-webkit-keyframes *@
+
+<style>
+    @@-webkit-keyframes animateWave {
+  0% {
+    background-position: 0;
+  }
+  100% {
+    background-position: 1000px 0; /* You can adjust this value to control the speed of the animation */
+  }
+}
+
+.wavy-background-top {
+  background-image: url('/images/waveTop.png'); /* Adjust the path as needed */
+  background-repeat: repeat-x; /* This will make the background repeat horizontally */
+  background-size: contain; /* This will ensure the full image is always visible */
+  height: 20px; /* Adjust the height as needed */
+  animation: animateWave 30s linear infinite; /* Adjust the time to control the speed */
+}
+.wavy-background-down {
+  background-image: url('/images/waveDown.png'); /* Adjust the path as needed */
+  background-repeat: repeat-x; /* This will make the background repeat horizontally */
+  background-size: contain; /* This will ensure the full image is always visible */
+  height: 20px; /* Adjust the height as needed */
+  animation: animateWave 30s linear infinite; /* Adjust the time to control the speed */
+}
+
+
+
+</style>
+
+
+
+<div class="row">
+    <div class="col-12 p-0">
+        @await Component.InvokeAsync("NewsCarouselComponent")
+    </div>
+</div>
+<div class="row mt-4 d-flex justify-content-center">
+    @await Component.InvokeAsync("PromotedItemsComponent")
+</div>
+
+<div class="row">
+    <div class="col-12 p-0">
+        <div class="wavy-background-top p-0 mt-5"></div>
+    </div>
+</div>
+
+<div class="row">
+    
+        <div class="bg-secondary w-100 d-flex align-items-center justify-content-center" style="height:400px;">
+            
+            <div class="d-flex justify-content-center w-100 justify-content-evenly">
+            <div class="col-3 d-flex flex-column align-items-center">
+                <img src="~/icons/quick.png" width="100px" height="100px"/>
+                <span class="text-center fs-5 text-white"><strong>Natychmiastowy dostęp po zakupie</strong></span>
+                <span class="text-center text-white">Dostęp do każdego kursu przyznawany jest od razu po zakupie</span>
+            </div>
+            
+            <div class="col-3 d-flex flex-column align-items-center">
+                <img src="~/icons/smile.png" width="100px" height="100px"/>
+                <span class="text-center text-white fs-5"><strong>1000 zadowolonych klientów</strong></span>
+                <span class="text-center text-white">Twój sukces to nasz cel</span>
+            </div>
+
+                <div class="col-3 d-flex flex-column align-items-center">
+                    
+                    <img src="~/icons/quality.png" width="100px" height="100px"/>
+                    <span class="text-center text-white fs-5"><strong>Niezrównana jakość kursów</strong></span>
+                    <span class="text-center text-white">Każdy kurs jest dokładnie sprawdzany pod kątem jakości</span>
+                </div>
+            </div>
+
+        </div>
+    
+
+</div>
+
+
+<div class="row">
+    <div class="col-12 p-0">
+        <div class="wavy-background-down p-0"></div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    @await Component.InvokeAsync("HighlightedComponent")
+</div>
+

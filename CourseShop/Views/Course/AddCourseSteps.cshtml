@@ -1,0 +1,95 @@
+﻿@model CourseShop.Application.CourseSteps.Commands.CreateCourseSteps.CreateCourseStepsCommand
+
+@{
+    ViewData["Title"] = "Create Course";
+    Layout = "_AdminLayout";
+    var idCourse = ViewBag.IdCourse;
+}
+
+
+
+
+<h1 class="text-center mt-3">Dodawanie kroków do kursu</h1>
+
+<div class="form-container bg-secondary mb-5">
+<form asp-action="AddCourseSteps" asp-controller="Course" asp-route-id="@idCourse" method="post">
+    
+    <div class="form-group">
+        <label for="stepCount">Liczba kroków:</label>
+        <input type="number" id="stepCount" name="stepCount" min="1" oninput="generateSteps()" class="form-control" />
+    </div>
+    
+    <div id="stepsContainer">
+
+    </div>
+    <div class="d-flex justify-content-between">
+        <a asp-action="DetailsAdmin" asp-route-id="@idCourse" class="a-edit fs-4">Powrót</a>
+        <button type="submit" class="a-edit fs-4">Zapisz</button>
+    </div>
+</form>
+</div>
+
+
+<script>
+    var idCourse = '@idCourse'; 
+function generateSteps() {
+
+    var container = document.getElementById('stepsContainer');
+    var stepCount = document.getElementById('stepCount').value;
+    container.innerHTML = ''; // Wyczyść obecne kroki
+
+
+
+
+    for (var i = 0; i < stepCount; i++) {
+        // Tworzenie inputu dla nazwy kroku
+        var nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.name = 'CourseSteps[' + i + '].Name';
+        nameInput.placeholder = 'Nazwa kroku ' + (i + 1);
+        nameInput.className = 'form-control mb-2';
+
+        // Tworzenie inputu dla opisu kroku
+        var descriptionInput = document.createElement('textarea');
+        descriptionInput.name = 'CourseSteps[' + i + '].Description';
+        descriptionInput.placeholder = 'Opis kroku ' + (i + 1);
+        descriptionInput.className = 'form-control mb-2';
+
+
+         var idCourseInput = document.createElement('input');
+        idCourseInput.type = 'hidden';
+        idCourseInput.name = 'CourseSteps[' + i + '].IdCourse';
+        idCourseInput.value = idCourse;
+        container.appendChild(idCourseInput);
+        
+
+        // Dodawanie inputów do kontenera
+        container.appendChild(nameInput);
+        container.appendChild(descriptionInput);
+         container.appendChild(descriptionInput);
+
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+        var inputs = document.querySelectorAll('#stepsContainer input[type="text"], #stepsContainer textarea');
+        var isValid = true;
+
+        inputs.forEach(function(input) {
+            if (!input.value.trim()) {
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            event.preventDefault(); // Zapobiegaj wysłaniu formularza
+            alert("Wszystkie pola muszą być wypełnione przed wysłaniem formularza.");
+        }
+    });
+});
+
+
+
+</script>

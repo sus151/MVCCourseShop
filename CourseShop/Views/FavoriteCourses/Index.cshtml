@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CourseShop.Application.User.Queries.GetUserFavoriteCoursesWithInfo.GetUserFavoriteCoursesWithInfoQuery>
+
+<h1 class="mb-5 mt-3 text-center">Ulubione kursy</h1>
+<div class="row" style="min-height:400px;">
+    @foreach (var course in Model)
+    {
+
+        <div class="col-3 d-flex justify-content-center mb-4 course-container">
+            <div class="card w-100 card-course" style="cursor: pointer;" data-course-id="@course.IdCourse" data-course-url="@Url.Action("Details", "Course", new { id = course.IdCourse })">
+                <img class="heart m-1" src="~/icons/redHeart.png" style="z-index:2; position:absolute; right:0;" width="50px" height="50px"/>
+
+                <img src="data:image;base64,@System.Convert.ToBase64String(course.CoursePicture)" class="card-img-top" alt="CoursePicture" style="height: 200px; object-fit: cover;">
+                <div class="card-body-course card-body">
+                    <h5 class="card-title">@course.Name</h5>
+                    <p class="card-text-course card-text">@course.Description</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+  $('.heart').click(function(event){
+    event.stopPropagation();
+    var cardToRemove = $(this).closest('.course-container');
+    
+
+     var self = $(this);
+        var courseId = self.closest('.card-course').data('course-id');
+         $.ajax({
+            url: '/Course/AddToFavorites',
+            type: 'POST',
+            data: { idCourse: courseId },
+            success: function(response) {
+                if(response.success) {
+                    console.log(response.action);
+                    if(response.action == "Deleted"){
+                    cardToRemove.remove();
+                    }
+                }
+            },
+            error: function(err) {
+                alert("Wystąpił błąd: " + err.responseText);
+            }
+        });
+    });
+
+
+
+    // Handler dla kliknięcia na kartę kursu (przekierowanie)
+    $('.card-course').click(function() {
+        var courseUrl = $(this).data('course-url');
+        window.location.href = courseUrl;
+    });
+</script>
